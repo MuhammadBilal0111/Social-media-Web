@@ -1,0 +1,1 @@
+group route (auth) whenever the group route is define on any route then you donot want to mention it as a route b/c it'll give you "404" directly use http://localhost:3000/sign-in
