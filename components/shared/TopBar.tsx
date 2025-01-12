@@ -2,9 +2,10 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { SignedIn, SignOutButton, OrganizationSwitcher } from "@clerk/nextjs";
+
 function TopBar() {
   return (
-    <nav className="fixed top-0 flex w-full items-center justify-between py-3 px-6 bg-gray-950 text-white">
+    <nav className="fixed z-10 top-0 flex w-full items-center justify-between py-3 px-6 bg-gray-950 text-white">
       <Link href="/" className="flex items-center gap-4">
         <Image src={"/assets/logo.svg"} alt="Logo" width={28} height={28} />
         <p className="max-xs:hidden text-2xl font-bold text-gray-300">
