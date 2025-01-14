@@ -8,8 +8,8 @@ import Image from "next/image";
 function BottomBar() {
   const pathname = usePathname();
   return (
-    <section className="fixed bottom-0 w-full z-10 rounded-t-3xl xs:px-7 p-4 md:hidden">
-      <div className="flex items-center justify-between gap-2 xs:gap-5">
+    <section className="bottombar">
+      <div className="bottombar-container">
         {sidebarLinks.map((link) => {
           const isActive =
             (pathname.includes(link?.route) && link.route.length > 1) ||
@@ -18,9 +18,7 @@ function BottomBar() {
             <Link
               href={link?.route}
               key={link?.label}
-              className={`flex flex-col items-center gap-2 p-2 rounded-lg sm:flex-1 sm:px-2 sm:py-2.5 ${
-                isActive && "bg-purple-600 "
-              }`}
+              className={`bottombar-link ${isActive && "bg-primary-500"}`}
             >
               <Image
                 src={link?.imgURL}
@@ -28,7 +26,7 @@ function BottomBar() {
                 width={24}
                 height={24}
               />
-              <p className="max-sm:hidden text-gray-300 font-semibold text-xs">
+              <p className="max-sm:hidden text-subtle-medium text-light-1 text">
                 {link?.label.split(/\s+/)[0]}
               </p>
             </Link>

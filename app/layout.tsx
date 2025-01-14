@@ -38,7 +38,8 @@ export default function RootLayout({
           {/* main container */}
           <main className="flex flex-row">
             <LeftSidebar />
-            <section className="flex min-h-screen flex-1 items-center bg-gray-900 px-6 pb-10 pt-28 max-md:pb-32 sm:px-10">
+            {/* main container is defined in global.css */}
+            <section className="main-container">
               <div className="w-full max-w-4xl">{children}</div>
             </section>
             <RightSidebar />

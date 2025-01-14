@@ -9,10 +9,9 @@ import { SignedIn, SignOutButton } from "@clerk/nextjs";
 
 function LeftSidebar() {
   const pathname = usePathname();
-  console.log(pathname);
   const router = useRouter();
   return (
-    <section className="sticky left-0 top-0 flex flex-col justify-between bg-gray-950 h-screen w-fit pb-5 pt-28 max-md:hidden">
+    <section className="custom-scrollbar leftsidebar">
       <div className="flex flex-col gap-2 px-4 w-full flex-1">
         {sidebarLinks.map((link) => {
           const isActive =
@@ -22,8 +21,8 @@ function LeftSidebar() {
             <Link
               href={link?.route}
               key={link?.label}
-              className={`flex items-center gap-6 p-4 ${
-                isActive && "bg-purple-600 rounded-lg "
+              className={`leftsidebar-link ${
+                isActive && "bg-primary-500 rounded-lg"
               }`}
             >
               <Image
@@ -32,17 +31,15 @@ function LeftSidebar() {
                 width={24}
                 height={24}
               />
-              <p className="max-lg:hidden text-gray-300 font-semibold">
-                {link?.label}
-              </p>
+              <p className="max-lg:hidden text-light-1">{link?.label}</p>
             </Link>
           );
         })}
       </div>
-      <div className="px-4 mt-10">
+      <div className="px-6 mt-10">
         <SignedIn>
           <SignOutButton>
-            <div className="cursor-pointer flex items-center gap-6 p-4">
+            <div className="cursor-pointer flex items-center gap-4 px-2">
               <Image
                 src="/assets/logout.svg"
                 alt="logout"
