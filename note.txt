@@ -6,3 +6,16 @@ signOutCallback={() => router.push("/login")}
 for tablet sm s ooper 
 or mobile sm s niche
 \s+ for words in regex
+zod
+utils are the utility function that we will use in out app
+
+What is a Blob?
+A Blob (Binary Large Object) is a data structure that represents raw binary data, often used for handling file-like objects in web applications. It can store large amounts of data, such as images, audio files, or any other kind of binary data, and allows efficient manipulation and transfer of these data types. In web development, Blobs are commonly used with the File API to read or write files in the browser, or to store binary data for later use.
+
+Blobs can be created from binary data or from other sources, such as files from the user's computer. They are typically used with the FileReader API or URL.createObjectURL() for displaying or processing files within a web application.
+
+nextjs me sb server side render hota h jusse loading time km lgta h or best seo hota h
+
+A Server Action can be defined with the React "use server" directive.
+convention to write server action in action.ts
+server actions can be used in both client and server

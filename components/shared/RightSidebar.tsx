@@ -2,7 +2,7 @@ import React from "react";
 
 function RightSidebar() {
   return (
-    <section className="custom-scrollbar rightSidebar">
+    <section className="rightSidebar">
       <div className="flex flex-1 flex-col justify-start">
         <h2 className="text-light-1 text-heading4-medium">
           Suggested Communities
