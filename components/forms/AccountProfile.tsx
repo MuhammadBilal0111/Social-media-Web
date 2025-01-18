@@ -54,6 +54,7 @@ function AccountProfile({ user, btnTitle }: Props) {
     const hasImageChanged = isBase64Image(blob); // check that image id base64 to confirm that user has changed the image
     if (hasImageChanged) {
       const imgRes = await startUpload(files);
+      console.log(imgRes);
       if (imgRes && imgRes[0]?.url) {
         values.profile_photo = imgRes[0]?.url;
       }
@@ -106,41 +107,38 @@ function AccountProfile({ user, btnTitle }: Props) {
           control={form.control}
           name="profile_photo"
           render={({ field }) => (
-            <>
-              {console.log(field)}
-              <FormItem className="flex justify-center items-center gap-2">
-                <FormLabel className="account-form-image-label">
-                  {field.value ? (
-                    <Image // if field.value exists, render the Image component with the profile photo
-                      src={field.value}
-                      alt="profile photo"
-                      height={96}
-                      width={96}
-                      priority // The priority prop ensures the profile photo is loaded immediately, improving perceived performance for the user.
-                      className="cursor-pointer rounded-full object-cover"
-                    />
-                  ) : (
-                    <Image // if field.value exists, render the Image component with the profile photo
-                      src="/assets/profile.svg"
-                      alt="profile photo"
-                      height={24}
-                      width={24}
-                      className="cursor-pointer object-contain"
-                    />
-                  )}
-                </FormLabel>
-                <FormControl className="text-base-semibold text-gray-200">
-                  <Input
-                    type="file"
-                    accept="image/*"
-                    placeholder="Upload a photo"
-                    className="account-form-image-input"
-                    onChange={(e) => handleImage(e, field.onChange)}
+            <FormItem className="flex justify-center items-center gap-2">
+              <FormLabel className="account-form-image-label">
+                {field.value ? (
+                  <Image // if field.value exists, render the Image component with the profile photo
+                    src={field.value}
+                    alt="profile photo"
+                    height={96}
+                    width={96}
+                    priority // The priority prop ensures the profile photo is loaded immediately, improving perceived performance for the user.
+                    className="cursor-pointer rounded-full object-cover"
                   />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            </>
+                ) : (
+                  <Image // if field.value exists, render the Image component with the profile photo
+                    src="/assets/profile.svg"
+                    alt="profile photo"
+                    height={24}
+                    width={24}
+                    className="cursor-pointer object-contain"
+                  />
+                )}
+              </FormLabel>
+              <FormControl className="text-base-semibold text-gray-200">
+                <Input
+                  type="file"
+                  accept="image/*"
+                  placeholder="Upload a photo"
+                  className="account-form-image-input"
+                  onChange={(e) => handleImage(e, field.onChange)}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
           )}
         />
         <FormField

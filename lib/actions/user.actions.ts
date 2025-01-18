@@ -22,9 +22,8 @@ export async function updateUser({
   path,
 }: Params): Promise<void> {
   //  Promise that resolves to void.
-  console.log("run", userId);
-  connectDb();
   try {
+    await connectDb();
     const updatedUser = await User.findOneAndUpdate(
       { id: userId },
       { username: username.toLowerCase(), name, image, bio, onboarded: true },
@@ -36,5 +35,13 @@ export async function updateUser({
     }
   } catch (error: any) {
     throw new Error(`Failed to create/update user:${error.message}`);
+  }
+}
+export async function fetchUser(userId: string) {
+  try {
+    await connectDb();
+    return await User.findOne({ id: userId });
+  } catch (error: any) {
+    throw new Error(`Failed to fetch user: ${error.message}`);
   }
 }
