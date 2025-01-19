@@ -16,8 +16,9 @@ import {
 import { Textarea } from "../ui/textarea";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { createThread } from "@/lib/actions/thread.action";
 
-function AccountProfile({ userId }: { userId: string }) {
+function PostThread({ userId }: { userId: string }) {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -28,9 +29,15 @@ function AccountProfile({ userId }: { userId: string }) {
       accountId: userId,
     },
   });
-  console.log(form);
+
   async function onSubmit(values: z.infer<typeof ThreadValidation>) {
-    console.log(values);
+    await createThread({
+      text: values.thread,
+      author: userId,
+      communityId: null,
+      path: pathname,
+    }); // a thread action
+    router.push("/");
   }
 
   return (
@@ -51,6 +58,7 @@ function AccountProfile({ userId }: { userId: string }) {
                 <Textarea
                   rows={15}
                   className="no-focus border-dark-2 bg-dark-3"
+                  {...field}
                 />
               </FormControl>
               <FormMessage />
@@ -65,4 +73,4 @@ function AccountProfile({ userId }: { userId: string }) {
   );
 }
 
-export default AccountProfile;
+export default PostThread;
