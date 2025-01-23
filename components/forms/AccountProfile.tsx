@@ -116,7 +116,7 @@ function AccountProfile({ user, btnTitle }: Props) {
                     height={96}
                     width={96}
                     priority // The priority prop ensures the profile photo is loaded immediately, improving perceived performance for the user.
-                    className="cursor-pointer rounded-full object-cover"
+                    className="profile-image"
                   />
                 ) : (
                   <Image // if field.value exists, render the Image component with the profile photo

@@ -44,6 +44,9 @@
 .account-form-image-label {
   @apply flex justify-center items-center w-24 h-24 cursor-pointer rounded-full bg-dark-4 !important;
 }
+.profile-image {
+  @apply cursor-pointer rounded-full object-cover;
+}
 @layer base {
   :root {
     --background: 0 0% 100%;
