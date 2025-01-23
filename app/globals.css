@@ -30,6 +30,9 @@
   .rightSidebar {
     @apply sticky top-0 right-0 z-20 border-l-dark-4 bg-dark-2  flex flex-col h-screen w-fit justify-between gap-12 border-l px-10 pb-6 pt-28 max-xl:hidden;
   }
+  .thread-card_bar {
+    @apply w-0.5 mt-2 grow bg-neutral-800;
+  }
 }
 /* shadcn custom styling */
 .account-form_input {

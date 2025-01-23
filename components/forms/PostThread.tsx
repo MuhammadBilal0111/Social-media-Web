@@ -21,7 +21,6 @@ import { createThread } from "@/lib/actions/thread.action";
 function PostThread({ userId }: { userId: string }) {
   const router = useRouter();
   const pathname = usePathname();
-
   const form = useForm({
     resolver: zodResolver(ThreadValidation),
     defaultValues: {
