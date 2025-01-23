@@ -42,12 +42,13 @@ export async function fetchThreads(pageNumber = 1, pageSize = 20) {
     // the thread that have have parents are comments but we don;t want to get it.
     const skipAmount = (pageNumber - 1) * pageSize;
 
-    const threadsQuery = Thread.find({
+    const threads = await Thread.find({
       parentId: { $in: [null, undefined] },
     })
       .sort({ createdAt: "desc" })
       .limit(pageSize)
       .skip(skipAmount)
+
       .populate({ path: "author", model: User })
       .populate({
         path: "children",
@@ -60,8 +61,9 @@ export async function fetchThreads(pageNumber = 1, pageSize = 20) {
     const totalPostCount = await Thread.countDocuments({
       parentId: { $in: [null, undefined] },
     });
-    const threads = await threadsQuery.exec();
+    // const threads = await threadsQuery.exec();
     const isNext = totalPostCount > skipAmount + threads.length;
+    console.log(totalPostCount, threads.length);
     return { threads, isNext };
   } catch (error: any) {
     throw new Error(`Error in creating the thread: ${error}`);
