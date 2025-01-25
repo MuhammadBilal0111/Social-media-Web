@@ -7,11 +7,9 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
@@ -34,14 +32,11 @@ function Comments({ threadId, currentUserImage, currentUserId }: Props) {
   const onSubmit = async (values: z.infer<typeof CommentValidation>) => {
     console.log(values);
     await addCommentToThread(threadId, values.thread, currentUserId, path);
-    form.reset();
+    form.reset(); // to reset the info
   };
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="mt-10 flex justify-start gap-5 items-center"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="comment-form">
         <FormField
           control={form.control}
           name="thread"
@@ -53,7 +48,7 @@ function Comments({ threadId, currentUserImage, currentUserId }: Props) {
                   alt="profile photo"
                   height={48}
                   width={48}
-                  className="profile-image"
+                  className="profile-image object-cover"
                 />
               </FormLabel>
               <FormControl className="border-none bg-transparent">
@@ -68,7 +63,7 @@ function Comments({ threadId, currentUserImage, currentUserId }: Props) {
             </FormItem>
           )}
         />
-        <Button type="submit" className="comment-btn">
+        <Button type="submit" className="comment-form_btn">
           Reply
         </Button>
       </form>

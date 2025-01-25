@@ -47,6 +47,12 @@
 .profile-image {
   @apply cursor-pointer rounded-full object-cover;
 }
+.comment-form {
+  @apply mt-10 flex items-center gap-4 border rounded-lg border-dark-4 py-5 max-xs:flex-col !important;
+}
+.comment-form_btn {
+  @apply rounded-3xl bg-primary-500 px-8 py-2 !text-small-regular text-light-1 max-xs:w-full !important;
+}
 @layer base {
   :root {
     --background: 0 0% 100%;
