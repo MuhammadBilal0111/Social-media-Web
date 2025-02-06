@@ -10,5 +10,8 @@ export const ThreadValidation = z.object({
       message: "Maximum limit of 1000 reached",
     })
     .nonempty(),
-  accountId: z.string().min(1, { message: "Account ID is required" }),
+  accountId: z
+    .string()
+    .min(1, { message: "Account ID is required" })
+    .nonempty(),
 });

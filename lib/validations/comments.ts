@@ -5,5 +5,6 @@ export const CommentValidation = z.object({
     .string()
     .nonempty()
     .min(3, { message: "Minimum 3 characters" })
-    .max(1000, { message: "Maximum characters reached" }),
+    .max(1000, { message: "Maximum characters reached" })
+    .nonempty(),
 });

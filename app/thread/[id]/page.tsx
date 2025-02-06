@@ -10,8 +10,8 @@ async function page({ params }: { params: { id: string } }) {
   const user = await currentUser();
   if (!user) return null;
   const userInfo = await fetchUser(user.id);
-  console.log(userInfo);
   if (!userInfo?.onboarded) redirect("/onBoarding");
+
   const thread = await fetchThreadById(params.id);
   console.log(thread);
   return (
@@ -29,23 +29,23 @@ async function page({ params }: { params: { id: string } }) {
       />
       <div className="mt-7">
         <Comments
-          threadId={thread._id}
+          threadId={JSON.stringify(thread._id)}
           currentUserImage={userInfo.image}
-          currentUserId={userInfo._id}
+          currentUserId={JSON.stringify(userInfo._id)} // because _id is mongoose special object
         />
       </div>
       <div className="mt-7">
-        {thread.children.map((thread: any) => (
+        {thread.children.map((childThread: any) => (
           <ThreadCard
-            key={thread._id}
-            id={thread._id}
+            key={childThread._id}
+            id={childThread._id}
             currentUserId={user?.id || ""} // currentUserId can potentially be null
-            parentId={thread.parentId}
-            content={thread.text}
-            author={thread.author}
-            community={thread.community}
-            createdAt={thread.createdAt}
-            comments={thread.children}
+            parentId={childThread.parentId}
+            content={childThread.text}
+            author={childThread.author}
+            community={childThread.community}
+            createdAt={childThread.createdAt}
+            comments={childThread.children}
             isComments={true}
           />
         ))}

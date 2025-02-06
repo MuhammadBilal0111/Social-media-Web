@@ -10,8 +10,8 @@ interface Props {
   bio: string;
 }
 function ProfileHeader({
-  accountId,
-  authUserId,
+  accountId, // db _id of user
+  authUserId, // clerk id of user
   name,
   username,
   imgUrl,

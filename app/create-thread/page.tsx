@@ -6,8 +6,9 @@ import PostThread from "@/components/forms/PostThread";
 
 async function page() {
   const user = await currentUser();
+  
   if (!user) return null;
-  const userInfo = await fetchUser(user.id);
+  const userInfo = await fetchUser(user.id); // id of clerk
   if (!userInfo?.onboarded) redirect("/onBoarding");
 
   return (

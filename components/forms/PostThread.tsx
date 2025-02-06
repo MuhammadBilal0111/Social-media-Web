@@ -1,5 +1,5 @@
 "use client";
-import React, { ChangeEvent, useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -18,6 +18,9 @@ import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { createThread } from "@/lib/actions/thread.action";
 
+/*
+ userid is the id of the user from mongoose db i.e _id
+*/
 function PostThread({ userId }: { userId: string }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -31,7 +34,7 @@ function PostThread({ userId }: { userId: string }) {
 
   async function onSubmit(values: z.infer<typeof ThreadValidation>) {
     await createThread({
-      text: values.thread,
+      text: values.thread, // text is the content of the thread
       author: userId,
       communityId: null,
       path: pathname,

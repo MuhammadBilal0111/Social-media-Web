@@ -30,8 +30,12 @@ function Comments({ threadId, currentUserImage, currentUserId }: Props) {
   });
   const path = usePathname();
   const onSubmit = async (values: z.infer<typeof CommentValidation>) => {
-    console.log(values);
-    await addCommentToThread(threadId, values.thread, currentUserId, path);
+    await addCommentToThread(
+      threadId,
+      values.thread,
+      JSON.parse(currentUserId),
+      path
+    );
     form.reset(); // to reset the info
   };
   return (
@@ -41,14 +45,14 @@ function Comments({ threadId, currentUserImage, currentUserId }: Props) {
           control={form.control}
           name="thread"
           render={({ field }) => (
-            <FormItem className="flex items-center gap-4 w-full">
-              <FormLabel>
+            <FormItem className="flex items-center w-full gap-3">
+              <FormLabel className="bg-red-500">
                 <Image
                   src={currentUserImage}
                   alt="profile photo"
                   height={48}
                   width={48}
-                  className="profile-image object-cover"
+                  className="rounded-full object-cover"
                 />
               </FormLabel>
               <FormControl className="border-none bg-transparent">
@@ -59,7 +63,6 @@ function Comments({ threadId, currentUserImage, currentUserId }: Props) {
                   {...field}
                 />
               </FormControl>
-              {/* <FormMessage /> */}
             </FormItem>
           )}
         />

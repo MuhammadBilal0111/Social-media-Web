@@ -5,14 +5,19 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Id is a required field"],
   },
+  name: {
+    type: String,
+    required: [true, "Name is a required field"],
+  },
   username: {
     type: String,
-    required: [true, "Id is a required field"],
+    required: [true, "Username is a required field"],
     unique: true,
   },
   image: String,
   bio: String,
   threads: [
+    // array to store the ids of each threads
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Thread", // used to link the user collection with thread
@@ -23,6 +28,7 @@ const userSchema = new mongoose.Schema({
     default: false,
   },
   communities: [
+    // array to store the ids of each communities
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Community", // used to link the user collection with communities

@@ -38,6 +38,7 @@ export async function updateUser({
     throw new Error(`Failed to create/update user:${error.message}`);
   }
 }
+// function to return the user details by using clerk user
 export async function fetchUser(userId: string) {
   try {
     await connectDb();
@@ -47,10 +48,11 @@ export async function fetchUser(userId: string) {
   }
 }
 export async function fetchUserThreads(userId: string) {
+  // clerk : userId
   try {
     await connectDb();
     const threads = User.findOne({ id: userId }).populate({
-      path: "threads",
+      path: "threads", // is the attribute of user that complete the info of thread from Thread model
       model: Thread,
       populate: {
         path: "children",
@@ -62,7 +64,6 @@ export async function fetchUserThreads(userId: string) {
         },
       },
     });
-    console.log(threads);
     return threads;
   } catch (error: any) {
     throw new Error(`Failed to fetch Threads: ${error.message}`);

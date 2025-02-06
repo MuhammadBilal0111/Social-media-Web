@@ -12,13 +12,13 @@ import ThreadTabCard from "@/components/cards/ThreadTabCard";
 async function Page({ params }: { params: { id: string } }) {
   const user = await currentUser();
   if (!user) return null;
-  const userInfo = await fetchUser(params.id);
+  const userInfo = await fetchUser(params.id); // function use clerk user id
   if (!userInfo.onboarded) redirect("/onBoarding");
   return (
     <section>
       <ProfileHeader
-        accountId={userInfo?._id}
-        authUserId={user?.id}
+        accountId={userInfo?._id} // db _id of user
+        authUserId={user?.id} // clerk id of user
         name={userInfo?.name}
         username={userInfo.username}
         imgUrl={userInfo.image}
@@ -34,11 +34,11 @@ async function Page({ params }: { params: { id: string } }) {
                   height={24}
                   width={24}
                   alt={profileTab.label}
-                  className="object contain"
+                  className="object contain mr-1"
                 />
                 <p className="max-sm:hidden">{profileTab.label}</p>
                 {profileTab.label === "Threads" && (
-                  <p className="ml-1 rounded-sm bg-light-4 px-2 text-tiny-medium text-light-1">
+                  <p className="ml-1 rounded-sm bg-light-4 px-2 py-1 text-tiny-medium text-light-1">
                     {userInfo.threads.length}
                   </p>
                 )}
@@ -53,8 +53,8 @@ async function Page({ params }: { params: { id: string } }) {
             >
               {profileTab.label}
               <ThreadTabCard
-                currentUserId={userInfo._id}
-                accountId={user.id}
+                currentUserId={userInfo._id} // db user id
+                accountId={user.id} // clerk user id
                 accountType="User"
               />
             </TabsContent>

@@ -3,7 +3,6 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-
 import { sidebarLinks } from "../../constant/index";
 import { SignedIn, SignOutButton } from "@clerk/nextjs";
 
@@ -37,8 +36,10 @@ function LeftSidebar() {
         })}
       </div>
       <div className="px-6 mt-10">
+        {/* if sign in then show the logout button */}
         <SignedIn>
           <SignOutButton>
+            {/* for customize button use the div inside the SignOutButton */}
             <div className="cursor-pointer flex items-center gap-4 px-2">
               <Image
                 src="/assets/logout.svg"

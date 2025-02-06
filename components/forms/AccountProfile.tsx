@@ -24,7 +24,7 @@ import { useRouter } from "next/navigation";
 
 interface Props {
   user: {
-    id: string;
+    id: string; // clerk isd
     objectId: string;
     name: string;
     username: string;

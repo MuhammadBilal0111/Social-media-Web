@@ -10,7 +10,7 @@ interface Author {
   name: string;
 }
 interface Props {
-  id: string; // thread id
+  id: string; // thread id db
   currentUserId: string; // current user id
   parentId: string | null;
   content: string;
@@ -21,8 +21,8 @@ interface Props {
   isComments?: boolean;
 }
 function ThreadCard({
-  id,
-  currentUserId,
+  id, // thread_id
+  currentUserId, // user_id but for home it is clerk id
   parentId,
   content,
   author,
@@ -31,12 +31,11 @@ function ThreadCard({
   comments,
   isComments,
 }: Props) {
-  console.log(id);
   // article is used for cards
   return (
     <article
-      className={`flex w-full flex-col rounded-xl m-2 ${
-        isComments ? " px-0 xs:px-7" : "bg-dark-2 p-7"
+      className={`flex w-full flex-col rounded-xl ${
+        isComments ? "px-0 xs:px-7" : "bg-dark-2 p-7"
       }`}
     >
       <div className="flex items-start justify-between">
@@ -63,7 +62,7 @@ function ThreadCard({
             </Link>
             <p className="mt-2 text-small-regular text-light-2">{content}</p>
             <div
-              className={`${isComments && "mtb-10"}mt-5 flex flex-col gap-3`}
+              className={`${isComments && "mt-10"} mt-5 flex flex-col gap-3`}
             >
               <div className="flex gap-3.5">
                 <Image
@@ -82,7 +81,6 @@ function ThreadCard({
                     className="cursor-pointer object-contain"
                   />
                 </Link>
-
                 <Image
                   src="/assets/repost.svg"
                   alt="repost"

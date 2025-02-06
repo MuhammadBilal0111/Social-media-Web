@@ -26,6 +26,7 @@ async function page() {
                 community={thread.community}
                 createdAt={thread.createdAt}
                 comments={thread.children}
+                // isComments={true}
               />
             ))}
           </>

@@ -23,7 +23,7 @@ export async function createThread({
     await connectDb();
     const createdThread = await Thread.create({
       text,
-      author,
+      author, // id of user (_id)
       community: null,
     });
     // Update User model
@@ -55,15 +55,15 @@ export async function fetchThreads(pageNumber = 1, pageSize = 20) {
         populate: {
           path: "author",
           model: User,
-          select: "_id name patentId image",
+          select: "_id name username image",
         },
       });
     const totalPostCount = await Thread.countDocuments({
       parentId: { $in: [null, undefined] },
     });
-    // const threads = await threadsQuery.exec();
+    // threads.length is at most pageSize thread length
+    // totalPostCount total length of threads present
     const isNext = totalPostCount > skipAmount + threads.length;
-    console.log(totalPostCount, threads.length);
     return { threads, isNext };
   } catch (error: any) {
     throw new Error(`Error in creating the thread: ${error}`);
