@@ -34,7 +34,7 @@ function ThreadCard({
   // article is used for cards
   return (
     <article
-      className={`flex w-full flex-col rounded-xl ${
+      className={`flex w-full flex-col rounded-xl my-2 ${
         isComments ? "px-0 xs:px-7" : "bg-dark-2 p-7"
       }`}
     >
