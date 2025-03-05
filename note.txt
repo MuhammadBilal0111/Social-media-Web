@@ -19,3 +19,20 @@ nextjs me sb server side render hota h jusse loading time km lgta h or best seo 
 A Server Action can be defined with the React "use server" directive.
 convention to write server action in action.ts
 server actions can be used in both client and server
+
+const userThreads = await Thread.find({
+      // contain all the threads and comment threads
+      author: userId,
+    });
+    const childThreadsId = userThreads.reduce((acc, userThread) => {
+      return acc.concat(userThread?.children);
+    }, []);
+
+    <div className="relative h-20 w-20 object-cover">
+            <Image
+              src={imgUrl}
+              alt="Profile Image"
+              fill // Image expands to cover its parent
+              className="rounded-full object-cover shadow-2xl"
+            />
+          </div>

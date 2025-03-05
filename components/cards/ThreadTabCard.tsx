@@ -13,7 +13,7 @@ async function ThreadTabCard({ currentUserId, accountId, accountType }: Props) {
   const result = await fetchUserThreads(accountId); // accountId = clerk id
   // it give the threads(comments and main thread) that the user made with comments and the user that made the comment
   if (!result) redirect("/");
-  // console.log(result);
+  
   return (
     <section className="mt-9 flex flex-col gap-10">
       {result.threads.map((thread: any) => (

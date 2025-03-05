@@ -12,7 +12,7 @@ import ThreadTabCard from "@/components/cards/ThreadTabCard";
 async function Page({ params }: { params: { id: string } }) {
   const user = await currentUser();
   if (!user) return null;
-  const userInfo = await fetchUser(params.id); // function use clerk user id
+  const userInfo = await fetchUser(user.id); // function use clerk user id
   if (!userInfo.onboarded) redirect("/onBoarding");
   return (
     <section>
@@ -26,9 +26,13 @@ async function Page({ params }: { params: { id: string } }) {
       />
       <div className="mt-9">
         <Tabs defaultValue="thread" className="w-full">
-          <TabsList>
+          <TabsList className="tab">
             {profileTabs.map((profileTab) => (
-              <TabsTrigger key={profileTab.label} value={profileTab.value}>
+              <TabsTrigger
+                className="tab"
+                key={profileTab.label}
+                value={profileTab.value}
+              >
                 <Image
                   src={profileTab.icon}
                   height={24}

@@ -5,6 +5,7 @@ import { connectDb } from "../mongoose";
 import User from "../models/user.model";
 import { revalidatePath } from "next/cache";
 import Thread from "../models/threadModel";
+import { FilterQuery, SortOrder } from "mongoose";
 
 interface Params {
   userId: string;
@@ -47,6 +48,7 @@ export async function fetchUser(userId: string) {
     throw new Error(`Failed to fetch user: ${error.message}`);
   }
 }
+// function to return the threads
 export async function fetchUserThreads(userId: string) {
   // clerk : userId
   try {
@@ -67,5 +69,76 @@ export async function fetchUserThreads(userId: string) {
     return threads;
   } catch (error: any) {
     throw new Error(`Failed to fetch Threads: ${error.message}`);
+  }
+}
+// fetch users for searching
+export async function fetchUsers({
+  userId,
+  searchString = "",
+  pageNumber = 1,
+  pageSize = 20,
+  sortBy = "desc",
+}: {
+  userId: string;
+  searchString?: string;
+  pageNumber?: number;
+  pageSize?: number;
+  sortBy?: SortOrder; // 1 | "desc" | -1 | "ascending" | "asc" | "descending"
+}) {
+  try {
+    await connectDb();
+    const skipAmount = (pageNumber - 1) * pageSize;
+
+    const regex = new RegExp(searchString, "i"); // make case insensitive;
+
+    const query: FilterQuery<typeof User> = {
+      // query has access to $or
+      // filter out current user
+      id: { $ne: userId },
+    };
+    if (searchString.trim() !== "") {
+      // .$or used to append the query
+      query.$or = [
+        { username: { $regex: regex } },
+        { name: { $regex: regex } },
+      ];
+    }
+    const sortOptions = { createdAt: sortBy };
+
+    const users = await User.find(query)
+      .sort(sortOptions)
+      .skip(skipAmount)
+      .limit(pageSize);
+
+    const totalUsersCount = await User.countDocuments(query); // get all the document
+    const isNext = totalUsersCount > skipAmount + users.length;
+    return { users, isNext };
+  } catch (error: any) {
+    throw new Error(`Failed to fetch Users: ${error.message}`);
+  }
+}
+export async function getActivities(userId: string) {
+  try {
+    connectDb();
+    const userThreads = await Thread.find({
+      // contain all the threads and comment threads
+      author: userId,
+    });
+    // getting all comments and replies
+    const childThreadsId = userThreads.reduce((acc, userThread) => {
+      return acc.concat(userThread?.children);
+    }, []);
+
+    const replies = await Thread.find({
+      _id: { $in: childThreadsId }, // _id of thread must be present inside the childThreadsIdsArray
+      author: { $ne: userId },
+    }).populate({
+      path: "author",
+      model: User,
+      select: "name image _id",
+    });
+    return replies;
+  } catch (error: any) {
+    throw new Error(`Failed to fetch activities: ${error.message}`);
   }
 }

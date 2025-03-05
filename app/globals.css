@@ -33,6 +33,18 @@
   .thread-card_bar {
     @apply w-0.5 mt-2 grow bg-neutral-800;
   }
+  .user-card {
+    @apply flex flex-col justify-between gap-4 max-xs:rounded-xl max-xs:bg-dark-3 max-xs:p-4 xs:flex-row xs:items-center;
+  }
+  .user-card_avatar {
+    @apply flex flex-1 items-start justify-start gap-3 xs:items-center;
+  }
+  .user-card_btn {
+    @apply h-auto min-w-[74px] rounded-lg bg-primary-500 text-[12px] text-light-1 !important;
+  }
+  .no-result {
+    @apply text-center !text-base-regular text-light-3;
+  }
 }
 /* shadcn custom styling */
 .account-form_input {
@@ -56,6 +68,9 @@
 }
 .no-focus {
   @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
+}
+.tab {
+  @apply flex min-h-[50px] flex-1 items-center gap-3 bg-dark-2 text-light-2 data-[state=active]:bg-[#0e0e12] data-[state=active]:text-light-2 !important;
 }
 @layer base {
   :root {
