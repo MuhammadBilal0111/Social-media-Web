@@ -30,6 +30,7 @@ function Comments({ threadId, currentUserImage, currentUserId }: Props) {
   });
   const path = usePathname();
   const onSubmit = async (values: z.infer<typeof CommentValidation>) => {
+    console.log("thread id in comments", threadId);
     await addCommentToThread(
       threadId,
       values.thread,

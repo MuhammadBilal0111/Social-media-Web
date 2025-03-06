@@ -4,7 +4,7 @@ import { connectDb } from "../mongoose";
 import User from "../models/user.model";
 import { revalidatePath } from "next/cache";
 import { throwDeprecation } from "process";
-import { model } from "mongoose";
+import mongoose, { model } from "mongoose";
 
 interface Params {
   text: string;
@@ -113,10 +113,12 @@ export async function addCommentToThread(
   try {
     await connectDb();
     // find the original thread by id
-    const originalThread = await Thread.findById(threadId);
+    const originalThread = await Thread.findById(JSON.parse(threadId));
+
     if (!originalThread) {
       throw new Error("Thread not found");
     }
+    console.log("originalThread", originalThread);
     const newThread = await Thread.create({
       text: commentText,
       author: userId,
@@ -127,6 +129,7 @@ export async function addCommentToThread(
     await originalThread.save();
     revalidatePath(path);
   } catch (error: any) {
+    console.log(error);
     throw new Error("Error fetching the threads info", error.message);
   }
 }

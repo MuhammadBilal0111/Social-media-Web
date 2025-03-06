@@ -12,8 +12,8 @@ async function page({ params }: { params: { id: string } }) {
   const userInfo = await fetchUser(user.id);
   if (!userInfo?.onboarded) redirect("/onBoarding");
 
-  const thread = await fetchThreadById(params.id);
-  console.log(thread);
+  const thread = await fetchThreadById(params?.id);
+
   return (
     <section>
       <ThreadCard
@@ -29,7 +29,7 @@ async function page({ params }: { params: { id: string } }) {
       />
       <div className="mt-7">
         <Comments
-          threadId={JSON.stringify(thread._id)}
+          threadId={JSON.stringify(thread._id)} // mongoose object _id not pass through props
           currentUserImage={userInfo.image}
           currentUserId={JSON.stringify(userInfo._id)} // because _id is mongoose special object
         />
