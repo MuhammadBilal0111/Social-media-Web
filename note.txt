@@ -36,3 +36,9 @@ const userThreads = await Thread.find({
               className="rounded-full object-cover shadow-2xl"
             />
           </div>
+
+
+
+Webhooks
+when event happens it send the request to do processing
+first we create ann organization using clerk

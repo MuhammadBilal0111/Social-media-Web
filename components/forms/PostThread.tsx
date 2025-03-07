@@ -16,7 +16,7 @@ import {
 import { Textarea } from "../ui/textarea";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { createThread } from "@/lib/actions/thread.action";
+import { createThread } from "@/lib/actions/thread.actions";
 
 /*
  userid is the id of the user from mongoose db i.e _id

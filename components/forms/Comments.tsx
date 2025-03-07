@@ -14,7 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { addCommentToThread } from "@/lib/actions/thread.action";
+import { addCommentToThread } from "@/lib/actions/thread.actions";
 
 interface Props {
   threadId: string;

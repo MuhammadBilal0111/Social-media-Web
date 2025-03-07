@@ -1,6 +1,6 @@
 // execute on server side
 import ThreadCard from "@/components/cards/ThreadCard";
-import { fetchThreads } from "@/lib/actions/thread.action";
+import { fetchThreads } from "@/lib/actions/thread.actions";
 import { currentUser } from "@clerk/nextjs/server";
 
 async function page() {

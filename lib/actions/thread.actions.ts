@@ -1,5 +1,5 @@
 "use server"; // cors doesnot allow the frontend to use the server function if you donot define the use server
-import Thread from "../models/threadModel";
+import Thread from "../models/thread.model";
 import { connectDb } from "../mongoose";
 import User from "../models/user.model";
 import { revalidatePath } from "next/cache";
