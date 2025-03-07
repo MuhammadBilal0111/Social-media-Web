@@ -47,9 +47,6 @@ function AccountProfile({ user, btnTitle }: Props) {
       bio: user?.bio || "",
     },
   });
-  // cloudinary.v2.uploader
-  // .upload("/home/my_image.jpg")
-  // .then(result=>console.log(result));
   async function onSubmit(values: z.infer<typeof userValidations>) {
     // z.infer<typeof userValidations> creates a type from the userValidations schema. This type is used to ensure that the values passed to the onSubmit function match the schema
     const blob = values.profile_photo;
