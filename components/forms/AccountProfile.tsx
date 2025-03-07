@@ -13,7 +13,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useUploadThing } from "@/lib/uploadthing";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { Textarea } from "../ui/textarea";
@@ -38,7 +37,7 @@ function AccountProfile({ user, btnTitle }: Props) {
   const [files, setFiles] = useState<File[]>([]);
   const router = useRouter();
   const pathname = usePathname();
-  const { startUpload } = useUploadThing("media");
+
   const form = useForm({
     resolver: zodResolver(userValidations),
     defaultValues: {
@@ -53,7 +52,7 @@ function AccountProfile({ user, btnTitle }: Props) {
     const blob = values.profile_photo;
     const hasImageChanged = isBase64Image(blob); // check that image id base64 to confirm that user has changed the image
     if (hasImageChanged) {
-      const imgRes = await startUpload(files);
+      // const imgRes = await startUpload(files);
       console.log(imgRes);
       if (imgRes && imgRes[0]?.url) {
         values.profile_photo = imgRes[0]?.url;
@@ -85,16 +84,17 @@ function AccountProfile({ user, btnTitle }: Props) {
       const file = e.target.files[0];
 
       setFiles(Array.from(e.target.files)); // e.target.files it is of type filelist convert it into the array
+      console.log(file);
       if (!file.type.includes("image")) return; // check to confirm that user input the image file
-      filereader.onload = (event) => {
-        // This defines what should happen after the file is successfully read by the FileReader
-        const imageDataUrl = event.target?.result?.toString() || "";
-        fieldChange(imageDataUrl); //fieldChange is likely a callback function that updates the application state, stores the image data, or performs some other operation (e.g., previewing the image or sending it to a server).
-      };
-      filereader.readAsDataURL(file); //filereader.readAsDataURL(file);
-      // This tells the FileReader to read the file as a Data URL (Base64 string).
-      // A Data URL is a format that represents the file's content encoded as a string. It is often used for displaying images directly in the browser without uploading them to a server.
-      // Once the file is read, the onload event is triggered, executing the logic defined in filereader.onload.
+      // filereader.onload = (event) => {
+      //   // This defines what should happen after the file is successfully read by the FileReader
+      //   const imageDataUrl = event.target?.result?.toString() || "";
+      //   fieldChange(imageDataUrl); //fieldChange is likely a callback function that updates the application state, stores the image data, or performs some other operation (e.g., previewing the image or sending it to a server).
+      // };
+      // filereader.readAsDataURL(file); //filereader.readAsDataURL(file);
+      // // This tells the FileReader to read the file as a Data URL (Base64 string).
+      // // A Data URL is a format that represents the file's content encoded as a string. It is often used for displaying images directly in the browser without uploading them to a server.
+      // // Once the file is read, the onload event is triggered, executing the logic defined in filereader.onload.
     }
   };
   return (
