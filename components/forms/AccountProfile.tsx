@@ -47,15 +47,18 @@ function AccountProfile({ user, btnTitle }: Props) {
       bio: user?.bio || "",
     },
   });
+  // cloudinary.v2.uploader
+  // .upload("/home/my_image.jpg")
+  // .then(result=>console.log(result));
   async function onSubmit(values: z.infer<typeof userValidations>) {
     // z.infer<typeof userValidations> creates a type from the userValidations schema. This type is used to ensure that the values passed to the onSubmit function match the schema
     const blob = values.profile_photo;
     const hasImageChanged = isBase64Image(blob); // check that image id base64 to confirm that user has changed the image
     if (hasImageChanged) {
-      // const imgRes = await startUpload(files);
-      console.log(imgRes);
-      if (imgRes && imgRes[0]?.url) {
-        values.profile_photo = imgRes[0]?.url;
+      const imageRes = await handleImageUpload(files[0]);
+      console.log(imageRes.secure_url);
+      if (imageRes) {
+        values.profile_photo = imageRes.secure_url;
       }
       // Update the user data in database
       // best practice to use object when you want to pass multiple argument so that you can pass the argument in any order
@@ -84,17 +87,38 @@ function AccountProfile({ user, btnTitle }: Props) {
       const file = e.target.files[0];
 
       setFiles(Array.from(e.target.files)); // e.target.files it is of type filelist convert it into the array
-      console.log(file);
       if (!file.type.includes("image")) return; // check to confirm that user input the image file
-      // filereader.onload = (event) => {
-      //   // This defines what should happen after the file is successfully read by the FileReader
-      //   const imageDataUrl = event.target?.result?.toString() || "";
-      //   fieldChange(imageDataUrl); //fieldChange is likely a callback function that updates the application state, stores the image data, or performs some other operation (e.g., previewing the image or sending it to a server).
-      // };
-      // filereader.readAsDataURL(file); //filereader.readAsDataURL(file);
-      // // This tells the FileReader to read the file as a Data URL (Base64 string).
-      // // A Data URL is a format that represents the file's content encoded as a string. It is often used for displaying images directly in the browser without uploading them to a server.
-      // // Once the file is read, the onload event is triggered, executing the logic defined in filereader.onload.
+      filereader.onload = (event) => {
+        // This defines what should happen after the file is successfully read by the FileReader
+        const imageDataUrl = event.target?.result?.toString() || "";
+        fieldChange(imageDataUrl); //fieldChange is likely a callback function that updates the application state, stores the image data, or performs some other operation (e.g., previewing the image or sending it to a server).
+      };
+      filereader.readAsDataURL(file); //filereader.readAsDataURL(file);
+      // This tells the FileReader to read the file as a Data URL (Base64 string).
+      // A Data URL is a format that represents the file's content encoded as a string. It is often used for displaying images directly in the browser without uploading them to a server.
+      // Once the file is read, the onload event is triggered, executing the logic defined in filereader.onload.
+    }
+  };
+  // function to upload image in cloudinary
+  const handleImageUpload = async (file: File) => {
+    if (!file) return;
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData, // Convert file to Base64 or URL
+      });
+
+      if (!response.ok) {
+        throw new Error("Upload failed");
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.log("Upload Error:", error);
     }
   };
   return (

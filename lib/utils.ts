@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 // we are defining the utility functions
 
-export const isBase64Image = (imageData:string) => {
+export const isBase64Image = (imageData: string) => {
   const base64Regex = /^data:image\/(png|jpe?g|gif|webpg);base64,/;
   return base64Regex.test(imageData);
 };
