@@ -27,7 +27,7 @@ export async function createCommunity(
     }
 
     const newCommunity = new Community({
-      id,
+      id, // clerk id
       name,
       username,
       image,
@@ -54,7 +54,7 @@ export async function fetchCommunityDetails(id: string) {
     connectDb();
 
     const communityDetails = await Community.findOne({ id }).populate([
-      "createdBy",
+      "createdBy", // .populate("createdBy") → Replaces the createdBy field (which likely stores a User ObjectId) with the actual User document.
       {
         path: "members",
         model: User,
@@ -211,7 +211,7 @@ export async function removeUserFromCommunity(
     const userIdObject = await User.findOne({ id: userId }, { _id: 1 });
     const communityIdObject = await Community.findOne(
       { id: communityId },
-      { _id: 1 }
+      { _id: 1 } // only return the _id
     );
 
     if (!userIdObject) {
@@ -294,7 +294,7 @@ export async function deleteCommunity(communityId: string) {
       return user.save();
     });
 
-    await Promise.all(updateUserPromises);
+    await Promise.all(updateUserPromises); // resolve all promise at a same time
 
     return deletedCommunity;
   } catch (error) {

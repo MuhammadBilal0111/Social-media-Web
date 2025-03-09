@@ -53,7 +53,6 @@ function AccountProfile({ user, btnTitle }: Props) {
     const hasImageChanged = isBase64Image(blob); // check that image id base64 to confirm that user has changed the image
     if (hasImageChanged) {
       const imageRes = await handleImageUpload(files[0]);
-      console.log(imageRes.secure_url);
       if (imageRes) {
         values.profile_photo = imageRes.secure_url;
       }
@@ -140,7 +139,7 @@ function AccountProfile({ user, btnTitle }: Props) {
                     className="profile-image"
                   />
                 ) : (
-                  <Image // if field.value exists, render the Image component with the profile photo
+                  <Image // if field.value not present, render the Image component with the profile photo
                     src="/assets/profile.svg"
                     alt="profile photo"
                     height={24}

@@ -42,3 +42,47 @@ const userThreads = await Thread.find({
 Webhooks
 when event happens it send the request to do processing
 first we create ann organization using clerk
+
+
+ // Remove the user's _id from the members array in the community
+    await Community.updateOne(
+      { _id: communityIdObject._id },
+      { $pull: { members: userIdObject._id } }
+    );
+
+    // Remove the community's _id from the communities array in the user
+    await User.updateOne(
+      { _id: userIdObject._id },
+      { $pull: { communities: communityIdObject._id } }
+    );
+
+const regex = new RegExp(searchString, "i");
+
+    // Create an initial query object to filter communities.
+    const query: FilterQuery<typeof Community> = {};
+
+    // If the search string is not empty, add the $or operator to match either username or name fields.
+    if (searchString.trim() !== "") {
+      query.$or = [
+        { username: { $regex: regex } },
+        { name: { $regex: regex } },
+      ];
+    }
+
+
+jub bhi  validation krne ho mongo k obj ki tou {_id:1} in second argument likhna
+
+
+// Remove the user's _id from the members array in the community
+    await Community.updateOne(
+      { _id: communityIdObject._id },
+      { $pull: { members: userIdObject._id } }
+    );
+
+
+const updateUserPromises = communityUsers.map((user) => {
+      user.communities.pull(communityId);
+      return user.save();
+    });
+
+    await Promise.all(updateUserPromises); // resolve all promise at a same time
